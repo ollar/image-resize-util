@@ -3,10 +3,10 @@
     'use strict';
 
     return {
-      'default': self['pica/dist/pica'],
+      'default': self['pica'],
       __esModule: true,
     };
   }
 
-  define('pica/dist/pica', [], vendorModule);
+  define('pica', [], vendorModule);
 })();
