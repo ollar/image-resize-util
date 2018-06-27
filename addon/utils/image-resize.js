@@ -25,11 +25,12 @@ export default function imageResize(
     img.src = URL.createObjectURL(image);
   })
     .then(({ sourceCanvas, offScreenCanvas }) =>
-      resizer
-        .resize(sourceCanvas, offScreenCanvas)
-        .then(result => resizer.toBlob(result, image.type, 0.9))
+      resizer.resize(sourceCanvas, offScreenCanvas).then(result => ({
+        result,
+        blob: resizer.toBlob(result, image.type, 0.9),
+      }))
     )
-    .then(blob =>
+    .then(({ result, blob }) =>
       Object.defineProperties(blob, {
         type: {
           value: image.type,
@@ -41,13 +42,13 @@ export default function imageResize(
           value: image.lastModified,
         },
 
-        // width: {
-        //   value: image_width,
-        // },
+        width: {
+          value: result.width,
+        },
 
-        // height: {
-        //   value: image_height,
-        // },
+        height: {
+          value: result.height,
+        },
       })
     );
 }
