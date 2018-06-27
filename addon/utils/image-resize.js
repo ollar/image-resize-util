@@ -1,8 +1,10 @@
 import Pica from 'pica';
+import { hash } from 'rsvp';
 
 export default function imageResize(
   image,
-  { maxWidth = 800, maxHeight = 600 }
+  { maxWidth = 800, maxHeight = 600 },
+  resizeOptions
 ) {
   const resizer = new Pica();
 
@@ -25,7 +27,7 @@ export default function imageResize(
     img.src = URL.createObjectURL(image);
   })
     .then(({ sourceCanvas, offScreenCanvas }) =>
-      resizer.resize(sourceCanvas, offScreenCanvas).then(result => ({
+      resizer.resize(sourceCanvas, offScreenCanvas, resizeOptions).then(result => hash({
         result,
         blob: resizer.toBlob(result, image.type, 0.9),
       }))
