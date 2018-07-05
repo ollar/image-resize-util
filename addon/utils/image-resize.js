@@ -3,7 +3,7 @@ import { hash } from 'rsvp';
 
 export default function imageResize(
   image,
-  { maxWidth = 800, maxHeight = 600 },
+  { maxWidth = 800, maxHeight = 600, keepRatio = true },
   resizeOptions
 ) {
   const resizer = new Pica();
@@ -14,13 +14,32 @@ export default function imageResize(
     const img = new Image();
 
     const offScreenCanvas = document.createElement('canvas');
-    offScreenCanvas.width = maxWidth;
-    offScreenCanvas.height = maxHeight;
+
+    var image_width = maxWidth,
+        image_height = maxHeight;
 
     img.onload = function() {
       sourceCanvas.width = img.width;
       sourceCanvas.height = img.height;
       sctx.drawImage(img, 0, 0);
+
+      if (keepRatio) {
+        image_width = image.width,
+        image_height = image.height;
+
+        if (image.width >= image.height) {
+          var imgRatioW = image.width / maxWidth;
+          image_width = maxWidth;
+          image_height = image.height / imgRatioW;
+        } else if (image.height > image.width) {
+          var imgRatioH = image.height / maxHeight;
+          image_width = image.width / imgRatioH;
+          image_height = maxHeight;
+        }
+      }
+
+      offScreenCanvas.width = image_width;
+      offScreenCanvas.height = image_height;
 
       res({ sourceCanvas, offScreenCanvas });
     };

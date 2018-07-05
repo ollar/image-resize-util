@@ -1,7 +1,9 @@
+[![Build Status](https://travis-ci.org/ollar/image-resize-util.svg?branch=master)](https://travis-ci.org/ollar/image-resize-util)
+
 image-resize-util
 ==============================================================================
 
-[Short description of the addon.]
+Takes an image and resizes it to given size, uses pica.js
 
 Installation
 ------------------------------------------------------------------------------
@@ -14,8 +16,13 @@ ember install image-resize-util
 Usage
 ------------------------------------------------------------------------------
 
-[Longer description of how to use the addon in apps.]
-
+```
+imageResize(file: File, {
+    maxWidth: Number = 800,
+    maxHeight: Number = 600,
+    keepRatio: Boolean = true
+}, resizeOptions: PicaOptionsObject) => Promise(Blob)
+```
 
 Contributing
 ------------------------------------------------------------------------------
