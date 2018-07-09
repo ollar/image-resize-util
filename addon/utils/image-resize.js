@@ -3,10 +3,12 @@ import { hash } from 'rsvp';
 
 export default function imageResize(
   image,
-  { maxWidth = 800, maxHeight = 600, keepRatio = true },
+  { maxWidth = 800, maxHeight = 600, keepRatio = true } = {},
   resizeOptions
 ) {
   const resizer = new Pica();
+
+  if (!image) return Promise.reject('No image passed');
 
   return new Promise(res => {
     const sourceCanvas = document.createElement('canvas');
@@ -43,7 +45,7 @@ export default function imageResize(
 
       res({ sourceCanvas, offScreenCanvas });
     };
-    img.src = URL.createObjectURL(image);
+    img.src = window.URL.createObjectURL(image);
   })
     .then(({ sourceCanvas, offScreenCanvas }) =>
       resizer.resize(sourceCanvas, offScreenCanvas, resizeOptions).then(result => hash({
