@@ -1,27 +1,30 @@
 import imageResize from 'dummy/utils/image-resize';
 import { module, test } from 'qunit';
 
+var byteCharacters = atob('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=');
+var byteNumbers = new Array(byteCharacters.length);
+for (var i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+}
+var byteArray = new Uint8Array(byteNumbers);
+const a = new Blob([byteArray], {type: 'image/png'});
+
+
 module('Unit | Utility | image-resize', function() {
-  // test('it works', async function(assert) {
-  //   const img = new Image();
-  //     img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEX/TQBcNTh/AAAAAXRSTlPM0jRW/QAAAApJREFUeJxjYgAAAAYAAzY3fKgAAAAASUVORK5CYII=';
+  test('it works', async function(assert) {
+    let result = await imageResize(a);
+    assert.ok(result);
+  });
 
-  //   const promise = new Promise(res => {
-  //     img.onload = function() {
-  //       res(img)
-  //     };
-  //   });
+  test('it works with maxWidth', async function(assert) {
+    let result = await imageResize(a, {maxWidth: 100, keepRatio: false});
+    assert.equal(result.width, 100);
+  });
 
-  //   const _img = await promise;
-
-  //   (async function(window) {
-  //     let _imageResize = imageResize.bind(window)
-  //     let result = await _imageResize(_img);
-  //     assert.ok(result);
-  //   })({URL: {
-  //     createObjectURL: () => true
-  //   }})
-  // });
+  test('it works with maxHeight', async function(assert) {
+    let result = await imageResize(a, {maxHeight: 100, keepRatio: false});
+    assert.equal(result.height, 100);
+  });
 
   test('null image throws error', async function(assert) {
     try {
