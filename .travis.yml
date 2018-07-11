@@ -48,5 +48,6 @@ script:
 
 deploy:
   provider: npm
-  email: "olegollar@gmail.com"
-  api_key: ""
+  email: olegollar@gmail.com
+  api_key:
+    secure: 0uNfbBU3PZWJZEJ+p7Jnx/PVkS/6ftFGstgiEdFcqMOHyMCQJDrkyxDPD0ISRaESwhgWc/6bltzI9+Lbphnc9Kr0cfLXDMkOttqOTKn+kVw/0MSVie1kJoCxhrVB2YYjYLPo8dGJZ8AOTzw2dHQ112wDhpdlXID5njaYG5/lNxY4fI3HKSOubdp9CgFWgL6w/Xw3CONMAw3Lof07HTCn+1vCaUV5eZ+TAph56jnc93rEA9r6KjIVIiyvXUWiHqTMhOHCv7LGOJsGGoMdrbPaDfanfF0UTWNBrZWYLSvIT2vxYOIGYRstr47G2eBpH9SZOc8WZUcHVW9XR3GheFyYw3QIAbeIVA9AZo767U15FjW35kOyjGnQXBR2QPjWztb9uIuKh459JM4SuyNVRZi/qDG4/cmnvHGthoCK3Q/uerw/mAxEUdZZEDLeS1kZhLUcA9NJCIyK18S0ICQMp1f+Mx10CDZZ2xTsvdf1LGbIqZmOsGGUJrJPNN5TtBRZV/c7CbcXn+ZOo54PTVdi7SkG5lALEBOmuO1JfI2Rr+u8oianN8vqsSdIH1V+GxyPprhvXGSIkVqTZ79WFYfGdsmWx5uPpA7eQIxtHGAXCln0zt6sPkMAxKXRfH7oThmR4nq7aclDtILsZqk4kOT0xgZbFYl7wJs8Vah8NmqF0NbZBqg=
