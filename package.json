@@ -5,7 +5,7 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "github:ollar/image-resize-util.git",
+  "repository": "github:ollar/image-resize-util",
   "license": "MIT",
   "author": "ollar",
   "directories": {
