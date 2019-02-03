@@ -1,9 +1,9 @@
 {
   "name": "image-resize-util",
-  "version": "0.0.10",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "1.0.0",
+  "description": "Ember util to resize images on client side with pica.js",
   "keywords": [
-    "ember-addon"
+    "ember-addon", "library-wrapper", "pica.js"
   ],
   "repository": "github:ollar/image-resize-util",
   "license": "MIT",
