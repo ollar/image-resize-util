@@ -42,6 +42,7 @@ export default function imageResize(
 
       offScreenCanvas.width = image_width;
       offScreenCanvas.height = image_height;
+      window.URL.revokeObjectURL(img.src);
 
       res({ sourceCanvas, offScreenCanvas });
     };
