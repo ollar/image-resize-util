@@ -3,10 +3,9 @@ language: node_js
 node_js:
   # we recommend testing addons with the same minimum supported node version as Ember CLI
   # so that your addon works for all apps
-  - "6"
+  - "10"
 
-sudo: false
-dist: trusty
+dist: xenial
 
 addons:
   chrome: stable
@@ -19,35 +18,44 @@ env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
-  matrix:
-    # we recommend new addons test the current and previous LTS
-    # as well as latest stable release (bonus points to beta/canary)
-    - EMBER_TRY_SCENARIO=ember-lts-2.12
-    - EMBER_TRY_SCENARIO=ember-lts-2.16
-    - EMBER_TRY_SCENARIO=ember-lts-2.18
-    - EMBER_TRY_SCENARIO=ember-release
-    - EMBER_TRY_SCENARIO=ember-beta
-    - EMBER_TRY_SCENARIO=ember-canary
-    - EMBER_TRY_SCENARIO=ember-default
 
-matrix:
+branches:
+  only:
+    - master
+    # npm version tags
+    - /^v\d+\.\d+\.\d+/
+
+jobs:
   fast_finish: true
   allow_failures:
     - env: EMBER_TRY_SCENARIO=ember-canary
 
-before_install:
-  - npm config set spin false
-  - npm install -g npm@4
-  - npm --version
+  include:
+    # runs linting and tests with current locked deps
+    - stage: "Tests"
+      name: "Tests"
+      script:
+        - npm run lint
+        - npm run test:ember
+
+    - stage: "Additional Tests"
+      name: "Floating Dependencies"
+      install:
+        - npm install --no-package-lock
+      script:
+        - npm run test:ember
+
+    # we recommend new addons test the current and previous LTS
+    # as well as latest stable release (bonus points to beta/canary)
+    - env: EMBER_TRY_SCENARIO=ember-lts-3.16
+    - env: EMBER_TRY_SCENARIO=ember-lts-3.20
+    - env: EMBER_TRY_SCENARIO=ember-release
+    - env: EMBER_TRY_SCENARIO=ember-beta
+    - env: EMBER_TRY_SCENARIO=ember-canary
+    - env: EMBER_TRY_SCENARIO=ember-default-with-jquery
+    - env: EMBER_TRY_SCENARIO=ember-classic
+    - env: EMBER_TRY_SCENARIO=embroider-safe
+    - env: EMBER_TRY_SCENARIO=embroider-optimized
 
 script:
-  - npm run lint:js
-  # Usually, it's ok to finish the test scenario without reverting
-  #  to the addon's original dependency state, skipping "cleanup".
-  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
-
-deploy:
-  provider: npm
-  email: olegollar@gmail.com
-  api_key:
-    secure: 0uNfbBU3PZWJZEJ+p7Jnx/PVkS/6ftFGstgiEdFcqMOHyMCQJDrkyxDPD0ISRaESwhgWc/6bltzI9+Lbphnc9Kr0cfLXDMkOttqOTKn+kVw/0MSVie1kJoCxhrVB2YYjYLPo8dGJZ8AOTzw2dHQ112wDhpdlXID5njaYG5/lNxY4fI3HKSOubdp9CgFWgL6w/Xw3CONMAw3Lof07HTCn+1vCaUV5eZ+TAph56jnc93rEA9r6KjIVIiyvXUWiHqTMhOHCv7LGOJsGGoMdrbPaDfanfF0UTWNBrZWYLSvIT2vxYOIGYRstr47G2eBpH9SZOc8WZUcHVW9XR3GheFyYw3QIAbeIVA9AZo767U15FjW35kOyjGnQXBR2QPjWztb9uIuKh459JM4SuyNVRZi/qDG4/cmnvHGthoCK3Q/uerw/mAxEUdZZEDLeS1kZhLUcA9NJCIyK18S0ICQMp1f+Mx10CDZZ2xTsvdf1LGbIqZmOsGGUJrJPNN5TtBRZV/c7CbcXn+ZOo54PTVdi7SkG5lALEBOmuO1JfI2Rr+u8oianN8vqsSdIH1V+GxyPprhvXGSIkVqTZ79WFYfGdsmWx5uPpA7eQIxtHGAXCln0zt6sPkMAxKXRfH7oThmR4nq7aclDtILsZqk4kOT0xgZbFYl7wJs8Vah8NmqF0NbZBqg=
+  - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
