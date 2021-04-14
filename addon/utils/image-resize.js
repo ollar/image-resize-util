@@ -10,7 +10,7 @@ export default function imageResize(
 
   if (!image) return Promise.reject('No image passed');
 
-  return new Promise(res => {
+  return new Promise((res) => {
     const sourceCanvas = document.createElement('canvas');
     const sctx = sourceCanvas.getContext('2d');
     const img = new Image();
@@ -18,16 +18,15 @@ export default function imageResize(
     const offScreenCanvas = document.createElement('canvas');
 
     var image_width = maxWidth,
-        image_height = maxHeight;
+      image_height = maxHeight;
 
-    img.onload = function() {
+    img.onload = function () {
       sourceCanvas.width = img.width;
       sourceCanvas.height = img.height;
       sctx.drawImage(img, 0, 0);
 
       if (keepRatio) {
-        image_width = img.width,
-        image_height = img.height;
+        (image_width = img.width), (image_height = img.height);
 
         if (img.width >= img.height) {
           var imgRatioW = img.width / maxWidth;
@@ -49,10 +48,14 @@ export default function imageResize(
     img.src = window.URL.createObjectURL(image);
   })
     .then(({ sourceCanvas, offScreenCanvas }) =>
-      resizer.resize(sourceCanvas, offScreenCanvas, resizeOptions).then(result => hash({
-        result,
-        blob: resizer.toBlob(result, image.type, 0.9),
-      }))
+      resizer
+        .resize(sourceCanvas, offScreenCanvas, resizeOptions)
+        .then((result) =>
+          hash({
+            result,
+            blob: resizer.toBlob(result, image.type, 0.9),
+          })
+        )
     )
     .then(({ result, blob }) =>
       Object.defineProperties(blob, {
