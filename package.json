@@ -1,6 +1,6 @@
 {
   "name": "image-resize-util",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Ember util to resize images on client side with pica.js",
   "keywords": [
     "ember-addon",
