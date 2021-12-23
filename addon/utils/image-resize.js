@@ -1,6 +1,14 @@
 import Pica from 'pica';
 import { hash } from 'rsvp';
 
+/**
+ * @param { File } image - image file to process (taken from input[type="file"] change event)
+ * @param { object } options
+ * @param { number } options.maxWidth - maximum result image width
+ * @param { number } options.maxHeight - maximum result image height
+ * @param { boolean } options.keepRatio - keep aspect ration or not
+ * @param { object } resizeOptions - pica resize options. {@link https://github.com/nodeca/pica#resizefrom-to-options---promise}
+ * */
 export default function imageResize(
   image,
   { maxWidth = 800, maxHeight = 600, keepRatio = true } = {},

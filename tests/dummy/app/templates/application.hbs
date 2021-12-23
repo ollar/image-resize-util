@@ -1,5 +1,15 @@
 {{page-title "Dummy"}}
 
-<h2 id="title">Welcome to Ember</h2>
+<form {{on 'change' this.handleFileChange}}>
+    <input type="file" name="">
+</form>
+
+<div class="preview">
+    {{#each this.imageUrls as |url|}}
+        <div>
+            <img src={{url}} />
+        </div>
+    {{/each}}
+</div>
 
 {{outlet}}
